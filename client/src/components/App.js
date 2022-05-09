@@ -7,10 +7,11 @@ import LoginPage from "./views/LoginPage/LoginPage.js";
 import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer"
+import VideoUploadPage from "./views/VideoUploadPage/VideoUploadPage"
 
-//null   Anyone Can go inside
-//true   only logged in user can go inside
-//false  logged in user can't go inside
+//null   Anyone Can go inside (아무나 이 페이지에 들어갈 수 있음)
+//true   only logged in user can go inside (로그인 한 사람만 해당 페이지에 들어갈 수 있음)
+//false  logged in user can't go inside (로그인 한 사람은 다시 로그인 화면으로 갈 수 없음 )
 
 function App() {
   return (
@@ -18,9 +19,10 @@ function App() {
       <NavBar />
       <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)' }}>
         <Switch>
-          <Route exact path="/" component={Auth(LandingPage, null)} />
+          <Route exact path="/" component={Auth(LandingPage, null)} />  
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
+          <Route exact path="/video/upload" component={Auth(VideoUploadPage, true)} /> 
         </Switch>
       </div>
       <Footer />
