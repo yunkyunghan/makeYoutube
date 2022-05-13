@@ -18,8 +18,17 @@
 3. Upload Page Header Tab 만들기
 4. Form Template 만들기
 5. 파일을 올리는 Template 만들기 위해 Drop-zone 다운받기
-    - npm install react-dropzone --save
+   - npm install react-dropzone --save
 6. onChange func 만들기
+
+## Multer로 서버에 비디오 저장하기
+1. OnDrop func 만들기
+2. 노드 서버에 파일을 저장하기 위해 Dependency를 먼저 다운로드 (in Server directory == root directory)
+   - npm install multer --save 
+3. 비디오 파일을 서버로 보내기
+4. 받은 비디오 파일을 서버에서 저장
+5. 파일 저장 경로를 클라이언트로 전달해 주기 
+(filefilter에는 따로 filter기능은 강의에서 제공하지 않음)
 
 ### 참고
 - https://www.inflearn.com/course/%EB%94%B0%EB%9D%BC%ED%95%98%EB%A9%B0-%EB%B0%B0%EC%9A%B0%EB%8A%94-%EB%85%B8%EB%93%9C-%EB%A6%AC%EC%95%A1%ED%8A%B8-%EC%9C%A0%ED%8A%9C%EB%B8%8C-%EB%A7%8C%EB%93%A4%EA%B8%B0/lecture/29589?tab=curriculum
