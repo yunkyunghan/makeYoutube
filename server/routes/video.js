@@ -4,6 +4,7 @@ const router = express.Router();
 
 const { auth } = require("../middleware/auth");
 const multer = require("multer"); // multer을 이용하여 파일 저장
+var ffmpeg = require("fluent-ffmpeg");
 
 // Storage Multer Config
 // 파일을 client에서 보낼 시 먼저 아래의 config의 option으로 먼저 들어옴.
@@ -37,9 +38,47 @@ router.post('/uploadfiles', (req, res) => { // /api/video를 굳이 안써줘도
         if (err) {
             return res.json({ success: false, err }) // error가 나면 success가 false이므로 VideoUploadPage.js의 Axios의 error alert가 뜰 수 있도록 해줌.
         }
-        return res.json({ success: true, url: res.req.file.path, fileNmae: res.req.file.fieldname }) // url은 파일 업로드시 경로 지정한 곳
+        return res.json({ success: true, url: res.req.file.path, fileName: res.req.file.fieldname }) // url은 파일 업로드시 경로 지정한 곳
     })
 
 }) 
 
+router.post('/thumbnail', (req, res) => { 
+    // 썸네일 생성 및 비디오 러닝타임
+
+    let filePath = "";
+    let fileDuration = "";
+
+    //비디오 정보 가져오기
+    ffmpeg.ffprobe(req.body.url, function (err, metadata) { // ffprobe을 이용해 정보를 가져옴.
+        console.dir(metadata); // all metadata
+        console.log(metadata.format.duration);
+        fileDuration = metadata.format.duration
+    });
+
+    // 썸네일 생성
+    ffmpeg(req.body.url) //client에서 온 비디오 저장 경로
+    .on('filenames', function (filenames) {
+        console.log('Will generate ' + filenames.join(', '))
+        console.log(filenames)
+
+        filePath = "uploads/thumbnails/" + filenames[0]
+    }) 
+    .on('end', function() { // 썸네일을 생성하고 무엇을 생성할지
+        console.log("Screenshots taken");
+        return res.json({ success: true, url: filePath, fileDuration: fileDuration})
+    })
+    .on('error', function (err) {
+        console.error(err);
+        return res.json({ success: false, err });
+    })
+    .screenshot({ 
+        count: 3,
+        folder: 'uploads/thumbnails',
+        size: '320x240',
+        filename: 'thumbnail-%b.png' // '%b' : input basename(filename w/o extention)
+    })
+}) 
+
 module.exports = router;
+ 

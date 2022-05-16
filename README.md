@@ -30,6 +30,15 @@
 5. 파일 저장 경로를 클라이언트로 전달해 주기 
 (filefilter에는 따로 filter기능은 강의에서 제공하지 않음)
 
+## ffmpeg으로 비디오 썸네일 생성하기
+1. 썸네일 생성을 위한 Dependency 다운
+    - window에서 ffmpeg 설치
+    - npm install fluent-ffmpeg --save
+2. 서버에 저장된 비디오를 이용한 썸네일 생성
+3. 생성된 썸네일을 서버에 저장
+4. 썸네일 이미지 파일 경로 정보를 클라이언트에 보내기
+5. 썸네일 이미지를 화면에 표시
+
 ### 참고
 - https://www.inflearn.com/course/%EB%94%B0%EB%9D%BC%ED%95%98%EB%A9%B0-%EB%B0%B0%EC%9A%B0%EB%8A%94-%EB%85%B8%EB%93%9C-%EB%A6%AC%EC%95%A1%ED%8A%B8-%EC%9C%A0%ED%8A%9C%EB%B8%8C-%EB%A7%8C%EB%93%A4%EA%B8%B0/lecture/29589?tab=curriculum
 - https://github.com/jaewonhimnae/boilerplate-mern-stack
