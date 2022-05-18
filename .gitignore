@@ -1,5 +1,6 @@
 /node_modules
 /build
+/screenshot
 
 dev.js
 
@@ -12,3 +13,5 @@ yarn-debug.kog*
 yarn-error.log*
 
 .vscode
+
+

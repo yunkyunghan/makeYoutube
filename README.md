@@ -39,6 +39,20 @@
 4. 썸네일 이미지 파일 경로 정보를 클라이언트에 보내기
 5. 썸네일 이미지를 화면에 표시
 
+## 비디오 업로드 하기
+1. 비디오 Collection 만들기
+   - Columns (= Fields )
+     - writer, title, description, privacy, filePath, category, views, duration,thumbnail
+2. onSubmit Function 만들기
+3. 요청할 데이터들을 서버로 보내기
+4. 보낸 데이터들을 MongoDB에 저장하기
+
+## RDBMS vs MongoDB
+MongoDB에서는 기존 데이터베이스의 용어가 다르니 참고하면 된다.
+
+![screenshot](/screenshot/RDMS%20vs%20MongDB.PNG)
+
+
 ### 참고
 - https://www.inflearn.com/course/%EB%94%B0%EB%9D%BC%ED%95%98%EB%A9%B0-%EB%B0%B0%EC%9A%B0%EB%8A%94-%EB%85%B8%EB%93%9C-%EB%A6%AC%EC%95%A1%ED%8A%B8-%EC%9C%A0%ED%8A%9C%EB%B8%8C-%EB%A7%8C%EB%93%A4%EA%B8%B0/lecture/29589?tab=curriculum
 - https://github.com/jaewonhimnae/boilerplate-mern-stack
