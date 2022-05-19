@@ -14,8 +14,8 @@ const videoSchema = mongoose.Schema({
     description : {
         type: String
     },
-    privacy : {
-        type: String
+    privacy : { // 0이 privacy, 1이 public.
+        type: Number
     },
     filePath : {
         type: String
@@ -24,7 +24,8 @@ const videoSchema = mongoose.Schema({
         type: String
     },
     views : {
-        type: String
+        type: Number,
+        default: 0
     },
     duration : {
         type: String
@@ -32,7 +33,7 @@ const videoSchema = mongoose.Schema({
     thumbnail : {
         type: String
     }
-})
+}, { timestamps: true})
 
 
 
