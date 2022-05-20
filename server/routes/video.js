@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-// const { Video } = require("../models/Video");
+const { Video } = require("../models/Video");
 
 const { auth } = require("../middleware/auth");
 const multer = require("multer"); // multer을 이용하여 파일 저장
@@ -41,6 +41,18 @@ router.post('/uploadfiles', (req, res) => { // /api/video를 굳이 안써줘도
         return res.json({ success: true, url: res.req.file.path, fileName: res.req.file.fieldname }) // url은 파일 업로드시 경로 지정한 곳
     })
 
+}) 
+
+router.post('/uploadVideo', (req, res) => { // /api/video를 굳이 안써줘도 되는 이유는 request를 보내면 먼저 index.js파일로 감. 그 후 video router로 감.
+    console.log("video:", req.body)
+     // 비디오 정보를 저장.
+    const video = new Video(req.body) // 인스턴스에 모든 varialbles 정보가 담김. (VideoUploadPage.js의 /uploadVideo)
+ console.log("video:",video, req.body)
+ 
+    video.save((err, doc) => { // mongoDB에 저장
+        if (err) return res.status(400).json({success: false, err})
+        res.status(200).json({ success: true })
+    })
 }) 
 
 router.post('/thumbnail', (req, res) => { 

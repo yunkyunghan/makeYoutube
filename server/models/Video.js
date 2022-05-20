@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+// const { Schema } = require('mongoose');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -38,6 +38,6 @@ const videoSchema = mongoose.Schema({
 
 
 
-const Video = mongoose.model('User', videoSchema);
+const Video = mongoose.model('Video', videoSchema);
 
 module.exports = { Video }

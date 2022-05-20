@@ -20,7 +20,7 @@ const CategoryOptions = [
     {vlaue: 5, label: "Sports"}
 ]
 
-function VideoUploadPage() {
+function VideoUploadPage(props) {
 
     // state : state 안에 value를 저장. 여러 value들을 state에 넣어준 다음에 server에 보내줄 때 state에 있는 것을 한꺼번에 보내 줌.
     const user = useSelector(state => state.user) // redux에서 state의 user를 가져옴. 
@@ -45,7 +45,7 @@ function VideoUploadPage() {
         setCategory(e.currentTarget.value)
     }
     const OnDrop = (files) => {
-        let formData = new FormData;
+        let formData = new FormData();
         // server에 data를 보낼 때 Axios를 이용함. 아래의 config를 서버에 같이 보내주지 않으면 오류가 발생.
         const config = {
             header: {'content-type': 'multipart.form-data'}
@@ -94,11 +94,18 @@ function VideoUploadPage() {
             duration: Duration,
             thumbnail:  ThumbnailPath  
         }
-
+      
         Axios.post('/api/video/uploadVideo', variables)
             .then(response => {
+                console.log("variables:",variables)
                 if (response.data.success){
-                    
+                    console.log("response.data:",response.data)
+                    message.success('성공적으로 업로드 했습니다.')
+
+                    setTimeout(() => {
+                        
+                    }, 3000);
+                    props.history.push('/')
                 } else {
                     alert('비디오 업로드에 실패했습니다.')
                 }
@@ -118,7 +125,7 @@ function VideoUploadPage() {
                         <Dropzone
                             onDrop={OnDrop}
                             multiple={false} // 하나만 파일 올리 시 false
-                            maxSize={800000000}
+                            maxSize={8000000000}
                         >
                         {({ getRootProps, getInputProps}) => (
                             <div style={{ width: '300px', height: '240px', border: '1px solid lightgrey', display: 'flex',
