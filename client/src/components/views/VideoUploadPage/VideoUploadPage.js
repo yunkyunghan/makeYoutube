@@ -10,14 +10,14 @@ const { Title } = Typography;
 
 const PrivateOptions = [
     {value: 0, label: "Private"},
-    {vlaue: 1, label: "Public"}
+    {value: 1, label: "Public"}
 ]
 const CategoryOptions = [
     {value: 0, label: "Film & Animation"},
-    {vlaue: 1, label: "Autos & Vehicles"},
-    {value: 3, label: "Music"},
-    {vlaue: 4, label: "Pets & Animals"},
-    {vlaue: 5, label: "Sports"}
+    {value: 1, label: "Autos & Vehicles"},
+    {value: 2, label: "Music"},
+    {value: 3, label: "Pets & Animals"},
+    {value: 4, label: "Sports"}
 ]
 
 function VideoUploadPage(props) {
@@ -57,14 +57,14 @@ function VideoUploadPage(props) {
                 if(response.data.success) {
                     console.log("확인:", response.data)
 
-                    let variable = {
+                    let variables = {
                         url: response.data.url,
-                        fileName: response.data.fileName
-                    } 
+                        fileName: response.data.fileName,
+                      };
                     
                     setfilePath(response.data.url)
 
-                    Axios.post('/api/video/thumbnail', variable) 
+                    Axios.post('/api/video/thumbnail', variables) 
                     .then(response => {
                         if (response.data.success) {
                             console.log("썸네일 확인:", response.data)
@@ -94,18 +94,18 @@ function VideoUploadPage(props) {
             duration: Duration,
             thumbnail:  ThumbnailPath  
         }
-      
+        
         Axios.post('/api/video/uploadVideo', variables)
             .then(response => {
                 console.log("variables:",variables)
                 if (response.data.success){
-                    console.log("response.data:",response.data)
+                    console.log("업로드 확인:",response.data)
                     message.success('성공적으로 업로드 했습니다.')
 
                     setTimeout(() => {
-                        
+                        props.history.push('/')
                     }, 3000);
-                    props.history.push('/')
+                    
                 } else {
                     alert('비디오 업로드에 실패했습니다.')
                 }
@@ -125,7 +125,7 @@ function VideoUploadPage(props) {
                         <Dropzone
                             onDrop={OnDrop}
                             multiple={false} // 하나만 파일 올리 시 false
-                            maxSize={8000000000}
+                            maxSize={10000000000}
                         >
                         {({ getRootProps, getInputProps}) => (
                             <div style={{ width: '300px', height: '240px', border: '1px solid lightgrey', display: 'flex',

@@ -44,16 +44,26 @@ router.post('/uploadfiles', (req, res) => { // /api/video를 굳이 안써줘도
 }) 
 
 router.post('/uploadVideo', (req, res) => { // /api/video를 굳이 안써줘도 되는 이유는 request를 보내면 먼저 index.js파일로 감. 그 후 video router로 감.
-    console.log("video:", req.body)
      // 비디오 정보를 저장.
     const video = new Video(req.body) // 인스턴스에 모든 varialbles 정보가 담김. (VideoUploadPage.js의 /uploadVideo)
- console.log("video:",video, req.body)
- 
+    
     video.save((err, doc) => { // mongoDB에 저장
         if (err) return res.status(400).json({success: false, err})
         res.status(200).json({ success: true })
     })
 }) 
+
+router.get('/getVideos', (req, res) => { 
+    // 비디오를 DB에서 가져와서 client로 보냄.
+    Video.find() // Video collection(table)안에 있는 모든 비디오를 가져옴.
+        .populate('writer')
+        .exec((err, videos) => {
+            if (err) return res.status(400).send(err);
+            res.status(200).json({ success: true, videos})
+        })
+}) 
+
+
 
 router.post('/thumbnail', (req, res) => { 
     // 썸네일 생성 및 비디오 러닝타임
