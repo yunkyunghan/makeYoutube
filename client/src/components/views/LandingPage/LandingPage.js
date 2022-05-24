@@ -30,14 +30,14 @@ function LandingPage() {
 
         // window 사이즈 별 한 Row 당 원하는 Col의 개수 (가장 클때 6x4, 중간일 때는 8X3, 가장 작을 때 1x24) 
         return  <Col key = {index} lg ={6} md={8} xs={24}> 
-            <a href ={`/video/${video._id}`} >
-                <div style ={{ position: 'relative'}}>
+            <div style ={{ position: 'relative'}}>
+                <a href ={`/video/${video._id}`} >
                     <img style ={{width: '100%'}} src = {`http://localhost:5000/${video.thumbnail}`} alt="thumbnail" />
                     <div className="duration">
                         <span>{minutes} : {seconds}</span>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
             <br/>
 
             <Meta   

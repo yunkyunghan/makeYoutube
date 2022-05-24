@@ -31,17 +31,6 @@ const upload = multer({ storage: storage }).single("file");
 //             Video
 //=================================
 
-router.post('/uploadfiles', (req, res) => { // /api/video를 굳이 안써줘도 되는 이유는 request를 보내면 먼저 index.js파일로 감. 그 후 video router로 감.
-
-    // client에서 받은 video를 server에 저장.
-    upload( req, res, err => {
-        if (err) {
-            return res.json({ success: false, err }) // error가 나면 success가 false이므로 VideoUploadPage.js의 Axios의 error alert가 뜰 수 있도록 해줌.
-        }
-        return res.json({ success: true, url: res.req.file.path, fileName: res.req.file.fieldname }) // url은 파일 업로드시 경로 지정한 곳
-    })
-
-}) 
 
 router.post('/uploadVideo', (req, res) => { // /api/video를 굳이 안써줘도 되는 이유는 request를 보내면 먼저 index.js파일로 감. 그 후 video router로 감.
      // 비디오 정보를 저장.
@@ -51,6 +40,15 @@ router.post('/uploadVideo', (req, res) => { // /api/video를 굳이 안써줘도
         if (err) return res.status(400).json({success: false, err})
         res.status(200).json({ success: true })
     })
+}) 
+
+router.post('/getVideoDetail', (req, res) => { 
+    Video.findOne({ "_id": req.body.videoId }) //client에서 사용하는 videoId를 이용해서 그에 맞는 정보를 가져와야 함.
+        .populate("writer") // 유저의 모든 정보를 가져오기 위해 populate을 사용.
+        .exec((err, videoDetail) => {
+            if(err) return res.status(400).send(err)
+            return res.status(200).json({success: true, videoDetail })
+        })
 }) 
 
 router.get('/getVideos', (req, res) => { 
