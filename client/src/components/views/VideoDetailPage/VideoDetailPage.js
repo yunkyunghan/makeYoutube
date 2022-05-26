@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Row, Col, List, Avatar } from 'antd';
 import Axios from 'axios';
 import SideVideo from './Section/SideVideo';
+import Subscribe from './Section/Subscribe';
+import { Video } from '../../../../../server/models/Video';
 
 function VideoDetailPage(props) {
    
@@ -14,8 +16,8 @@ function VideoDetailPage(props) {
         Axios.post('/api/video/getVideoDetail', variable)
             .then(response => {
                 if (response.data.success) {
+                    console.log("비디오 상세정보 확인:", response.data.videoDetail)
                     setVideoDeatail(response.data.videoDetail)
-                    console.log("비디오 상세정보 확인:", response.data)
                 } else {
                     alert('비디오 정보를 가져오길 실패했습니다.')
                 }
@@ -28,8 +30,8 @@ function VideoDetailPage(props) {
                 <Col lg={18} xs={24}>
                     <div style={{ width: '100%', padding: '3rem 4rem'}}>
                         <video style ={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls />  {/*화면에서 비디오 부분*/}
-                            <List.Item
-                                actions
+                            <List.Item 
+                                actions={[<Subscribe userTo={Video.writer._id} />]} 
                             >
                                 <List.Item.Meta
                                     avatar={<Avatar src ={VideoDetail.writer.image} />} //populate을 videp.js에서 썼기 때문에 정보를 가져올 수 있음.
