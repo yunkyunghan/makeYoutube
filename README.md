@@ -83,6 +83,12 @@ MongoDB에서는 기존 데이터베이스의 용어가 다르니 참고하면 �
    - 1 Subscribed
 5. 가져온 정보들 화면에 출력
 
+## 구독 기능(2)
+1. 구독하기 기능 만들기
+2. 구독 취소하기 기능 만들기
+   - 아직 구독 중이 아니라면 `Subscribe`
+   - 이미 구독 중이라면 `UnSubscribe`
+
 ### 참고
 - https://www.inflearn.com/course/%EB%94%B0%EB%9D%BC%ED%95%98%EB%A9%B0-%EB%B0%B0%EC%9A%B0%EB%8A%94-%EB%85%B8%EB%93%9C-%EB%A6%AC%EC%95%A1%ED%8A%B8-%EC%9C%A0%ED%8A%9C%EB%B8%8C-%EB%A7%8C%EB%93%A4%EA%B8%B0/lecture/29589?tab=curriculum
 - https://github.com/jaewonhimnae/boilerplate-mern-stack

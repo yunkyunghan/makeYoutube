@@ -3,7 +3,6 @@ import { Row, Col, List, Avatar } from 'antd';
 import Axios from 'axios';
 import SideVideo from './Section/SideVideo';
 import Subscribe from './Section/Subscribe';
-// import { Video } from '../../../../../server/models/Video';
 
 function VideoDetailPage(props) {
    
@@ -31,7 +30,7 @@ function VideoDetailPage(props) {
                     <div style={{ width: '100%', padding: '3rem 4rem'}}>
                         <video style ={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls />  {/*화면에서 비디오 부분*/}
                             <List.Item 
-                                actions={[<Subscribe userTo={VideoDetail.writer._id} />]} 
+                                actions={[<Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')} />]} 
                             >
                                 <List.Item.Meta
                                     avatar={<Avatar src ={VideoDetail.writer.image} />} //populate을 videp.js에서 썼기 때문에 정보를 가져올 수 있음.

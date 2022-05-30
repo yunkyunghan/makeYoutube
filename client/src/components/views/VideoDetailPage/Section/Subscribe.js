@@ -24,22 +24,55 @@ function Subscribe(props) {
             Axios.post('/api/subscribe/subscribed', subscribedVariable)
                 .then (response => {
                     if (response.data.success) {
+                        console.log("구독 정보:", response.data)
                         setSubscribed(response.data.subscribed)
                     } else {
                         alert ("구독하는 지에 대한 정보를 받아오지 못했습니다.")
                     }
                 })
-    }, []);
+    }, [])
+
+    const onSubscribe = () => {
+        // 이미 구독 중이라면
+        let subscribeVariable = {
+            userTo: props.userTo,
+            userFrom: props.userFrom
+        }
+
+        if (Subscribed) {
+            Axios.post('/api/subscribe/unSubscribe', subscribeVariable)
+                .then(response => {
+                    if (response.data.success) {
+                        console.log("구독 취소 정보:", response.data)
+                        setSubscribeNumber(SubscribeNumber - 1)
+                        setSubscribed(!Subscribed)
+                    } else {
+                        alert('구독 취소하는데 실패했습니다.')
+                    }
+                })
+        } else { // 아직 구독 중이 아니라면
+            Axios.post('/api/subscribe/subscribe', subscribeVariable)
+                .then(response => {
+                    if (response.data.success) {
+                        console.log("구독 하는지 정보:", response.data)
+                        setSubscribeNumber(SubscribeNumber + 1)
+                        setSubscribed(!Subscribed)
+                    } else {
+                        alert('구독 하는데 실패했습니다.')
+                    }
+                })
+        }
+    };
 
     return (
         <div>
             <button 
             style = {{ 
-                backgroundColor: `${Subscribe ?  '#CC0000' : '#AAAAAA'}`, borderRadius: '4px',
+                backgroundColor: `${Subscribed ? '#AAAAAA' : '#CC0000'}`, borderRadius: '4px',
                 color: 'white', padding: '10px 16px',
                 fontWeight: '500', fontSize: '1rem', textTransform: 'uppercase'
             }}
-            onClick
+            onClick = {onSubscribe}
         >
             {SubscribeNumber} {Subscribed ? 'Subscribed' : 'Subscribe'}
             </button>
