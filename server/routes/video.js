@@ -5,6 +5,7 @@ const { Video } = require("../models/Video");
 const { auth } = require("../middleware/auth");
 const multer = require("multer"); // multer을 이용하여 파일 저장
 var ffmpeg = require("fluent-ffmpeg");
+const { Subscriber } = require('../models/Subscriber');
 
 // Storage Multer Config
 // 파일을 client에서 보낼 시 먼저 아래의 config의 option으로 먼저 들어옴.
@@ -61,8 +62,6 @@ router.get('/getVideos', (req, res) => {
         })
 }) 
 
-
-
 router.post('/thumbnail', (req, res) => { 
     // 썸네일 생성 및 비디오 러닝타임
 
@@ -99,6 +98,28 @@ router.post('/thumbnail', (req, res) => {
         filename: 'thumbnail-%b.png' // '%b' : input basename(filename w/o extention)
     })
 }) 
+
+router.post('/getSubscriptionVideos', (req, res) => { 
+    // 현재 자신의 userId를 가지고 구독하는 사람들을 찾아야 함.
+    Subscriber.find({userFrom: req.body.userFrom})
+     .exec((err, subscriberInfo) => { // subscriberInfo에 구독하는 사람들(userTo)에 대한 정보가 담겨 있음.
+            if (err) return res.status(400).send(err);
+
+            let subscribedUser = []; // 여러명일 수 있으니 배열로.
+            subscriberInfo.map((subscriber, i) => {
+                subscribedUser.push(subscriber.userTo);
+                console.log("구독하는 user 정보:", subscribedUser)
+            })
+
+    // 찾은 사람들의 비디오를 갖고 옴.
+    Video.find({ writer: { $in: subscribedUser }})
+        .populate('writer')
+        .exec((err, videos) => {
+            if (err) return res.status(400).send(err);
+            res.status(200).json({ success: true, videos })
+        })
+    })
+}); 
 
 module.exports = router;
  

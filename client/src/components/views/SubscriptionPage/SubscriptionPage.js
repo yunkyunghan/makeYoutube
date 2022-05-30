@@ -7,20 +7,25 @@ import moment from 'moment';
 const { Title } = Typography;
 const { Meta } = Card;
 
+function SubscriptionPage() {
 
-function LandingPage() {
     const [Video, setVideo] = useState([]);
-
+    // 내가 구독하는 비디오에 대한 정보를 가져옴.
+  
     useEffect (() => { // dom이 로드 될 때 무엇을 할 것인지 결정해 줌. 
-        Axios.get('/api/video/getVideos')
-        .then(response => {
-            if(response.data.success) {
-                console.log("LandingPage 확인:",response.data)
-                setVideo(response.data.videos)
-            } else {
-                alert('비디오 가져오기를 실패했습니다.')
-            }
-        })
+        const subscriptionVariables = {
+            userFrom: localStorage.getItem('userId')
+        }
+
+        Axios.post('/api/video/getSubscriptionVideos', subscriptionVariables)
+            .then(response => {
+                if(response.data.success) {
+                    console.log("구독 비디오 가져오기:", response.data)
+                    setVideo(response.data.videos)
+                } else {
+                    alert('비디오 가져오기를 실패 했습니다.')
+                }
+            })
     },[]);
 
     const renderCards = Video.map((video, index) => {
@@ -66,4 +71,4 @@ function LandingPage() {
     )
 }
 
-export default LandingPage
+export default SubscriptionPage
